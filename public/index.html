@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drop In Charts</title>
+    <style>
+      .ct-line {
+        fill: none;
+        stroke: rgba(0,0,0,.25);
+        stroke-width: 1px;
+      }
+      .ct-area {
+        fill-opacity: 0.1;
+        stroke: none;
+      }
+      .ct-series-a .ct-line {
+        stroke: rgba(255,0,0,0.25);
+      }
+      .ct-series-b .ct-line {
+        stroke: rgba(0,0,255,0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drop-in-chart"></div>
+    <script src="/dist/drop-in-chart.min.js"></script>
+    <script>
+      ReactDOM.render(
+        React.createElement(DropInChart, {
+          data: {
+            labels: ['five', 'six', 'seven', 'eight'],
+            series: [
+              {
+                name: 'Party Time',
+                data: [9,5,2,8],
+              },
+              {
+                name: 'Sleepy Time',
+                data: [7,4,6,1],
+              },
+            ],
+          },
+          options: {
+            series: {
+              'Party Time': {
+                showArea: true,
+              },
+            },
+          },
+        }),
+        document.getElementById('drop-in-chart')
+      );
+    </script>
+  </body>
+</html>
