@@ -74,11 +74,11 @@ DropInChart.defaultProps = {
  * ## Pure Helper Functions
  */
 
-function maybeGetAxisTitle(axis, axisName) {
+function maybeGetAxisTitle(axis = {}, axisName) {
   const classes = `drop-in-chart__axis-title axis-title-${axisName}`;
   let title = [];
 
-  if (axis.hasOwnProperty("title")) {
+  if (!!axis.title) {
     title.push(
       <span
         key={axis.title}
