@@ -78,7 +78,7 @@ function maybeGetAxisTitle(axis, axisName) {
   const classes = `drop-in-chart__axis-title axis-title-${axisName}`;
   let title = [];
 
-  if (axis.title) {
+  if (axis.hasOwnProperty("title")) {
     title.push(
       <span
         key={axis.title}
