@@ -39,7 +39,7 @@ function DropInChart(props) {
         </ul>
       }
       {props.caption &&
-          <figcaption>{props.caption}</figcaption>
+          <figcaption className="caption-text">{props.caption}</figcaption>
       }
     </figure>
   );
