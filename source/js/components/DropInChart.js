@@ -21,7 +21,7 @@ function DropInChart(props) {
   labels.push(maybeGetAxisTitle(props.options.axisY, 'y'));
 
   return (
-    <div className="drop-in-chart aligncenter">
+    <figure className="drop-in-chart aligncenter">
       <div className="drop-in-chart__chart">
         <ChartistGraph {...props} />
         {labels}
@@ -38,7 +38,10 @@ function DropInChart(props) {
           ))}
         </ul>
       }
-    </div>
+      {props.caption &&
+          <figcaption>{props.caption}</figcaption>
+      }
+    </figure>
   );
 }
 
