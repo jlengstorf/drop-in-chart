@@ -15,14 +15,29 @@ import ChartistGraph from 'react-chartist';
  * ## Stateless Component
  */
 function DropInChart(props) {
+
+  let labels = [];
+  labels.push(maybeGetAxisTitle(props.options.axisX, 'x'));
+  labels.push(maybeGetAxisTitle(props.options.axisY, 'y'));
+
   return (
     <div className="drop-in-chart aligncenter">
-      <ChartistGraph {...props} />
-      <ul className="drop-in-chart__legend">
-        {props.data.series.map(series => (
-          <li key={series.name}>{series.name}</li>
-        ))}
-      </ul>
+      <div className="drop-in-chart__chart">
+        <ChartistGraph {...props} />
+        {labels}
+      </div>
+      {props.legend &&
+        <ul className="drop-in-chart__legend">
+          {props.data.series.map((series, index) => (
+            <li
+              key={series.name}
+              className={`drop-in-chart__legend-item legend-item-${index}`}
+            >
+              {series.name}
+            </li>
+          ))}
+        </ul>
+      }
     </div>
   );
 }
@@ -52,7 +67,30 @@ DropInChart.defaultProps = {
     fullWidth: true,
   },
   type: 'Line',
+  legend: true,
 };
+
+/*
+ * ## Pure Helper Functions
+ */
+
+function maybeGetAxisTitle(axis, axisName) {
+  const classes = `drop-in-chart__axis-title axis-title-${axisName}`;
+  let title = [];
+
+  if (axis.title) {
+    title.push(
+      <span
+        key={axis.title}
+        className={classes}
+      >
+        {axis.title}
+      </span>
+    );
+  }
+
+  return title;
+}
 
 /*
  * ## Export the Component
