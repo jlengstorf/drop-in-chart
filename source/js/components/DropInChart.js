@@ -15,23 +15,25 @@ import ChartistGraph from 'react-chartist';
  * ## Stateless Component
  */
 function DropInChart(props) {
+  const classes = getDefaultClasses(props.classes);
+  const baseClass = classes.base + classes.elementSeparator;
 
   let labels = [];
-  labels.push(maybeGetAxisTitle(props.options.axisX, 'x'));
-  labels.push(maybeGetAxisTitle(props.options.axisY, 'y'));
+  labels.push(maybeGetAxisTitle(props.options.axisX, 'x', baseClass));
+  labels.push(maybeGetAxisTitle(props.options.axisY, 'y', baseClass));
 
   return (
-    <figure className="drop-in-chart aligncenter">
-      <div className="drop-in-chart__chart">
+    <figure className={`${classes.base} ${props.align}`}>
+      <div className={`${baseClass}chart`}>
         <ChartistGraph {...props} />
         {labels}
       </div>
       {props.legend &&
-        <ul className="drop-in-chart__legend">
+        <ul className={`${baseClass}legend`}>
           {props.data.series.map((series, index) => (
             <li
               key={series.name}
-              className={`drop-in-chart__legend-item legend-item-${index}`}
+              className={`${baseClass}legend-item legend-item-${index}`}
             >
               {series.name}
             </li>
@@ -39,7 +41,9 @@ function DropInChart(props) {
         </ul>
       }
       {props.caption &&
-          <figcaption className="caption-text">{props.caption}</figcaption>
+          <figcaption className={`${baseClass}caption ${classes.caption}`}>
+            {props.caption}
+          </figcaption>
       }
     </figure>
   );
@@ -71,14 +75,55 @@ DropInChart.defaultProps = {
   },
   type: 'Line',
   legend: true,
+  align: 'alignright',
+  classes: {},
 };
 
 /*
  * ## Pure Helper Functions
  */
 
-function maybeGetAxisTitle(axis = {}, axisName) {
-  const classes = `drop-in-chart__axis-title axis-title-${axisName}`;
+/**
+ * ### getDefaultClasses()
+ * Returns an object with default values supplied where omitted, and any
+ * unexpected properties dropped.
+ *
+ * Uses ES6 destructuring and defaults, which is much simpler than the old way
+ * of using `var option = opts.option || 'default'`, and also avoids pulling in
+ * a third-party tool like Lodash or jQuery just for merging objects. Neat!
+ *
+ * @param  {String} options.base              the base BEM-ish class name
+ * @param  {String} options.elementSeparator  separates blocks from elements
+ * @param  {String} options.modifierSeparator separates modifiers from elements
+ * @param  {String} options.caption           optional class for the caption
+ * @return {Object}                           classes, with defaults set
+ */
+function getDefaultClasses({
+  base = 'drop-in-chart',
+  elementSeparator = '__',
+  modifierSeparator = '--',
+  caption = '',
+} = {}) {
+
+  // All the hard work is already done; just return the values as an object.
+  return {
+    base: base,
+    elementSeparator: elementSeparator,
+    modifierSeparator: modifierSeparator,
+    caption: caption,
+  };
+}
+
+/**
+ * ### maybeGetAxisTitle()
+ * If an axis title was set, returns it in markup
+ * @param  {Object} axis      the axisN object from the Chartist config
+ * @param  {String} axisName  identifier for the axis (typically `x` or `y`)
+ * @param  {String} baseClass the base class name for building BEM-ish classes
+ * @return {Array}            an array of zero or one React elements
+ */
+function maybeGetAxisTitle(axis = {}, axisName, baseClass) {
+  const classes = `${baseClass}axis-title axis-title-${axisName}`;
   let title = [];
 
   if (!!axis.title) {
