@@ -1,7 +1,7 @@
 {
   "name": "drop-in-charts",
   "version": "0.0.1",
-      "description": "Uses React.js and Chartist.js to allow quickly charting data.",
+  "description": "Uses React.js and Chartist.js to allow quickly charting data.",
   "main": "app/index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --port 3000 --content-base=./public --history-api-fallback --devtool source-map",
@@ -19,7 +19,6 @@
     "url": "https://github.com/jlengstorf/drop-in-charts/issues"
   },
   "dependencies": {
-    "classnames": "^2.2.0",
     "react": "^0.14.0",
     "react-chartist": "^0.10.0",
     "react-dom": "^0.14.0"
