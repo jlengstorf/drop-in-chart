@@ -75,7 +75,7 @@ DropInChart.defaultProps = {
   },
   type: 'Line',
   legend: true,
-  align: 'alignright',
+  align: 'aligncenter',
   classes: {},
 };
 
